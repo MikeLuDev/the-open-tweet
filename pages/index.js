@@ -11,12 +11,18 @@ const PageHeader = () => {
     return (
         <section>
             <h1>The Open Tweet</h1>
+            <h2>Sends in 4:29</h2>
             <style jsx>{`
-                display: flex;
-                justify-content: center;
-                background: ${colors.blue};
-                color: white;
-                padding: 4px 0;
+                section {
+                    margin: 12px;
+                    padding: 8px 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    background: ${colors.blue};
+                    color: white;
+                }
             `}</style>
         </section>
     )
@@ -25,12 +31,15 @@ const PageHeader = () => {
 const PageButton = () => {
     return (
         <button>
-            <h1>Button</h1>
+            <h1>Edit tweet</h1>
             <style jsx>{`
-                display: flex;
-                justify-content: center;
-                background: ${colors.green};
-                color: white;
+                button {
+                    margin: 12px;
+                    display: flex;
+                    justify-content: center;
+                    background: ${colors.green};
+                    color: white;
+                }
             `}</style>
         </button>
     )
@@ -39,16 +48,35 @@ const PageButton = () => {
 const PageBody = () => {
     return (
         <section>
+            <div>
+                <img src="https://via.placeholder.com/64x64" />
+                <a href="https://www.twitter.com/theOpenTweet" target="_blank" rel="noopener">@theOpenTweet</a>
+            </div>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel posuere libero, non euismod arcu. Quisque viverra sollicitudin nisl, in congue ante fermentum sed. Proin egestas libero sit amet dolor eleifend, et convallis leo mattis. Pellentesque rhoncus elementum posuere.
+                The Open Tweet is a web app for crowd sourcing tweets from the online community. Click the button below and you'll have the opportunity to edit one of the 280 characters contained in this tweet. Please try to be respectful. Just kidding - be as vulgar as you want and have fun! :)
             </p>
             <style jsx>{`
                 section {
                     background: ${colors.white};
                     padding: 16px;
+                    flex-grow: 1;
+                    margin: 0 12px;
+                }
+                a {
+                    font-size: 20px;
                 }
                 p {
-                    font-size: 22px;
+                    font-size: 18px;
+                }
+                img {
+                    border-radius: 50%;
+                    max-width: 48px;
+                    margin-right: 12px;
+                }
+                div {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 12px;
                 }
             `}</style>
         </section>
@@ -62,8 +90,14 @@ const PageContent = () => {
             <PageBody />
             <PageButton />
             <style jsx>{`
-                    max-width: 720px;
-                    width: 100%;
+            div {
+                max-width: 720px;
+                max-height: 720px;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100vh;
+            }
                 `}</style>
         </div>
     )
@@ -78,7 +112,7 @@ export default class Index extends React.Component {
     }
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <Head>
                     <title>My page title</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
@@ -86,11 +120,6 @@ export default class Index extends React.Component {
                 </Head>
                 <PageContent />
                 <style jsx>{`
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    width: 100%;
                 `}</style>
                 <style jsx global>{`
                     html {
@@ -102,24 +131,31 @@ export default class Index extends React.Component {
                         background: ${colors.gray};
                         box-sizing: border-box;
                         margin: 0;
-                        padding: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100vh;
+                        width: 100vw;
                     }
                     p, h1, h2 {
                         margin: 0;
                         padding: 0;
                     }
-                    section {
-                        margin-bottom: 12px;
-                    }
                     button {
                         margin: 0;
                         padding: 8px;
                         border: 0;
-                        width: 100%;
                         font-family: 'roboto'
                     }
+                    a {
+                        color: ${colors.blue};
+                        text-decoration: none;
+                    }
+                    h2 {
+                        font-size: 21px;
+                    }
                 `}</style>
-            </div>
+            </React.Fragment>
         )
     }
 }
