@@ -7,6 +7,8 @@ const colors = {
     gray: '#E6ECF0'
 }
 
+const currentTweet = "The Open Tweet is a web app for crowd sourcing tweets from the online community. Click the button below and you'll have the opportunity to edit one of the 280 characters contained in this tweet. Please try to be respectful. Just kidding - be as vulgar as you want and have fun! :)";
+
 const PageHeader = () => {
     return (
         <section>
@@ -28,10 +30,10 @@ const PageHeader = () => {
     )
 }
 
-const PageButton = () => {
+const PageButton = ({ handleButtonClick, text }) => {
     return (
-        <button>
-            <h1>Edit tweet</h1>
+        <button onClick={handleButtonClick}>
+            {text}
             <style jsx>{`
                 button {
                     margin: 12px;
@@ -45,16 +47,31 @@ const PageButton = () => {
     )
 }
 
-const PageBody = () => {
+class EditContent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            edit_character: 0,
+        }
+    }
+
+    render() {
+        return (
+            <section>
+
+            </section>
+        )
+    }
+}
+
+const LandingBody = ({ tweet }) => {
     return (
         <section>
             <div>
                 <img src="https://via.placeholder.com/64x64" />
                 <a href="https://www.twitter.com/theOpenTweet" target="_blank" rel="noopener">@theOpenTweet</a>
             </div>
-            <p>
-                The Open Tweet is a web app for crowd sourcing tweets from the online community. Click the button below and you'll have the opportunity to edit one of the 280 characters contained in this tweet. Please try to be respectful. Just kidding - be as vulgar as you want and have fun! :)
-            </p>
+            <p>{tweet}</p>
             <style jsx>{`
                 section {
                     background: ${colors.white};
@@ -83,24 +100,57 @@ const PageBody = () => {
     )
 }
 
-const PageContent = () => {
-    return (
-        <div>
-            <PageHeader />
-            <PageBody />
-            <PageButton />
-            <style jsx>{`
-            div {
-                max-width: 720px;
-                max-height: 720px;
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                height: 100vh;
-            }
+class PageContent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.kAppStages = {
+            0: 'landing',
+            1: 'editing'
+        }
+        this.state = {
+            stage: this.kAppStages[0],
+            button_text: 'Edit Tweet',
+            tweet: currentTweet,
+        }
+    }
+
+    handleButtonClick() {
+        const currentStage = this.state.stage;
+        if (currentStage == this.kAppStages[0]) {
+            this.setState({
+                stage: this.kAppStages[1]
+            })
+        } else if (currentStage == this.kAppStages[1]) {
+            this.setState({
+                stage: this.kAppStages[0]
+            })
+        }
+        console.log(this.state.stage);
+    }
+
+    render() {
+        return (
+            <div>
+                <PageHeader />
+                <LandingBody tweet={this.state.tweet} />
+                <PageButton
+                    text={this.state.button_text}
+                    handleButtonClick={this.handleButtonClick} />
+                <style jsx>{`
+                div {
+                    max-width: 720px;
+                    max-height: 720px;
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    height: 100vh;
+                }
                 `}</style>
-        </div>
-    )
+            </div>
+        )
+    }
+
 }
 
 export default class Index extends React.Component {
@@ -145,7 +195,8 @@ export default class Index extends React.Component {
                         margin: 0;
                         padding: 8px;
                         border: 0;
-                        font-family: 'roboto'
+                        font-family: 'roboto';
+                        font-size: 20px;
                     }
                     a {
                         color: ${colors.blue};
